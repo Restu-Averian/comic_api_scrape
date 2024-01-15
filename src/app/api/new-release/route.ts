@@ -2,6 +2,7 @@ import { JSDOM } from "jsdom";
 import { NextResponse } from "next/server";
 import { BASE_URL } from "@/app/constants/BASE_URL";
 import getHtml from "@/app/helpers/getHtml";
+import puppeteer from "puppeteer";
 
 interface newReleaseProps {
   id: string | null;
@@ -9,7 +10,19 @@ interface newReleaseProps {
   imgUrl: string | null;
 }
 export async function GET(req: Request) {
-  const html = await getHtml(BASE_URL);
+  const browser = await puppeteer.launch();
+
+  const page = await browser.newPage();
+
+  await page.goto(BASE_URL);
+
+  await new Promise((r) => setTimeout(r, 2000));
+
+  const html = await page.content();
+
+  await browser.close();
+
+  // const html = await getHtml(BASE_URL);
 
   const dom = new JSDOM(html);
   const document = dom?.window?.document;
