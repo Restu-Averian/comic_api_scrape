@@ -7,7 +7,7 @@ const getHtml = async (url: string) => {
 
   await page.goto(url);
 
-  // await new Promise((r) => setTimeout(r, 2000));
+  await new Promise((r) => setTimeout(r, 2000));
 
   const html = await page.content();
 
