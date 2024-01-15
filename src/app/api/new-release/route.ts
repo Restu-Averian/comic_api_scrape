@@ -2,7 +2,6 @@ import { JSDOM } from "jsdom";
 import { NextResponse } from "next/server";
 import { BASE_URL } from "@/app/constants/BASE_URL";
 import getHtml from "@/app/helpers/getHtml";
-import { BASE_URL2 } from "@/app/constants/BASE_URL2";
 
 interface newReleaseProps {
   id: string | null;
@@ -10,9 +9,10 @@ interface newReleaseProps {
   imgUrl: string | null;
 }
 export async function GET(req: Request) {
-  const html = await getHtml(BASE_URL2);
+  const html = await getHtml(BASE_URL);
 
-  const document = new JSDOM(html)?.window.document;
+  const dom = new JSDOM(html);
+  const document = dom?.window?.document;
 
   const newRelease: Array<newReleaseProps> = [];
 
