@@ -10,7 +10,7 @@ interface newReleaseProps {
   imgUrl: string | null;
 }
 export async function GET(req: Request) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
 
   const page = await browser.newPage();
 
